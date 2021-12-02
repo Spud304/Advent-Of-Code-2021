@@ -1,7 +1,7 @@
 import os
 
 here = os.path.dirname(os.path.abspath(__file__))
-filename = os.path.join(here, 'test.txt')
+filename = os.path.join(here, 'input.txt')
 
 depth = 0
 horizontal = 0
