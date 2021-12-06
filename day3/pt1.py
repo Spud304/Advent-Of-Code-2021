@@ -4,6 +4,8 @@ from typing import Counter
 here = os.path.dirname(os.path.abspath(__file__))
 filename = os.path.join(here, 'input.txt')
 
+filename = 'input.txt'
+
 l_dict = {}
 
 with open(filename, 'r') as f:

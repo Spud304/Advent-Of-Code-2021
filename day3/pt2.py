@@ -2,41 +2,44 @@ import os
 from typing import Counter
 
 here = os.path.dirname(os.path.abspath(__file__))
-filename = os.path.join(here, 'test.txt')
+filename = os.path.join(here, 'input.txt')
 
-l_dict = {}
+from typing import List
 
-with open(filename, 'r') as f:
-    lines = f.read().split('\n')
-    counter = 0
-    for line in lines:
-        l_dict[counter] = list(line)
-        counter += 1
 
-# find most common bit in the corresponding position of all numbers in the dictionary
-def find_most_common_bit():
-    bit_dict = {}
-    for i in range(len(l_dict[0])):
-        bit_dict[i] = []
-        for j in range(len(l_dict)):
-            bit_dict[i].append(l_dict[j][i])
-    for i in range(len(l_dict[0])):
-        bit_dict[i] = Counter(bit_dict[i])
-        bit_dict[i] = bit_dict[i].most_common(1)[0][0]
-    return bit_dict
+def get_common_bits(bit_list: List[str], most_common=True) -> str:
+    common = ""
+    for i in range(len(bit_list[0])):
+        bits = [n[i] for n in bit_list]
+        if bits.count("0") > len(bits) / 2:
+            common += "0" if most_common else "1"
+        else:
+            common += "1" if most_common else "0"
+    return common
 
-def find_least_common_bit():
-    bit_dict = {}
-    for i in range(len(l_dict[0])):
-        bit_dict[i] = []
-        for j in range(len(l_dict)):
-            bit_dict[i].append(l_dict[j][i])
-    for i in range(len(l_dict[0])):
-        bit_dict[i] = Counter(bit_dict[i])
-        bit_dict[i] = bit_dict[i].most_common()[-1][0]
-    return bit_dict
 
-bit_len = len(l_dict[0])
+def reduce_bitlist(bit_list, most_common_bit=True) -> str:
+    for index in range(len(bit_list[0])):
+        common = get_common_bits(bit_list, most_common_bit)
+        bit_list = [bits for bits in bit_list if bits[index] == common[index]]
 
-copy_dict = l_dict
-    
+        if len(bit_list) == 1:
+            return bit_list[0]
+    return bit_list[0]
+
+
+def solution_1(puzzle_input: str):
+    puzzle_data = [n for n in puzzle_input.splitlines() if n != ""]
+    return int(get_common_bits(puzzle_data), 2) * int(
+        get_common_bits(puzzle_data, most_common=False), 2
+    )
+
+
+def solution_2(puzzle_input: str):
+    puzzle_data = [n for n in puzzle_input.splitlines() if n != ""]
+    return int(reduce_bitlist(puzzle_data), 2) * int(
+        reduce_bitlist(puzzle_data, most_common_bit=False), 2
+)
+
+print(solution_1(open(filename).read()))
+print(solution_2(open(filename).read()))
