@@ -17,13 +17,9 @@ def find_steps(data):
     fuel = 0
     mean = find_mean(data)
     for step in range(len(data)):
-        tempFuel = 0
         diff = abs(data[step] - mean)
         for i in range(diff):
-            # print(f'{step} {i}')
-            tempFuel += i + 1
-        print(f'Step {step}, Data: {data[step]}, diff: {diff}, fuel: {tempFuel}')
-        fuel += tempFuel
+            fuel += i + 1
     return fuel
 
 print(find_mean(data))
