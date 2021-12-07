@@ -1,12 +1,13 @@
 import os
 
 here = os.path.dirname(os.path.abspath(__file__))
-filename = os.path.join(here, 'test.txt')
+filename = os.path.join(here, 'input.txt')
 
 data = [int(x) for x in open(filename).read().split(',')]
 
 # iterate through data find median number
 def find_median(data):
+    data.sort()
     return data[int(len(data)/2)]
 
 # iterate and find difference between median and number in data
