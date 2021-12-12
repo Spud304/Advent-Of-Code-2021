@@ -1,5 +1,4 @@
 import os
-import math
 
 here = os.path.dirname(os.path.abspath(__file__))
 filename = os.path.join(here, 'input.txt')
